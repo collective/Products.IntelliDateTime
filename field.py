@@ -11,6 +11,7 @@ from datetime import datetime
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
 
+from Products.Archetypes.Field import ObjectField
 from Products.Archetypes.Field import DateTimeField
 
 from bda.intellidatetime import IIntelliDateTime
@@ -25,7 +26,7 @@ class IntelliDateTimeField(DateTimeField):
     
     _properties = DateTimeField._properties.copy()
     _properties.update({
-        'type': 'datetime',
+        'type': 'intellidatetime',
         'widget': IntelliDateTimeWidget,
     })
 

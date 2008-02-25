@@ -14,6 +14,7 @@ Requires:
 
   * bda.intellidatetime
   * plone of course
+  * archetypes, sadly
 
 TODO:
 =====
