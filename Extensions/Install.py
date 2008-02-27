@@ -9,7 +9,7 @@ __docformat__ = 'plaintext'
 
 from StringIO import StringIO
 from Products.Archetypes.Extensions.utils import install_subskin
-from Products.UserAndGroupSelectionWidget.config import PROJECTNAME, GLOBALS
+from Products.IntelliDateTime.config import PROJECTNAME, GLOBALS
         
 def install(self):
     out = StringIO()
