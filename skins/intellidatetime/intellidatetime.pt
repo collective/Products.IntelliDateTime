@@ -33,11 +33,6 @@
                               dateinputvalue python:widget.dateInputValue(value);
                               timeinputvalue python:widget.timeInputValue(value);">
             
-            <div>
-              value: 
-              <span tal:content="value" />
-            </div>
-            
             <metal:macro use-macro="context/intellidatetime_macros/macros/intelliDatePickerBox" />
 
           </tal:define>

@@ -12,7 +12,7 @@
 function onIntelliDateUpdate(cal) {
 	var date = {
     	'y': cal.date.getFullYear(),
-    	'm': cal.date.getMonth(),
+    	'm': cal.date.getMonth() + 1,
     	'd': cal.date.getDate()
     };
     
@@ -35,7 +35,7 @@ function onIntelliDateUpdate(cal) {
     var input = cal.params.inputField;
     input.value = value.substring(0, value.length - 1);
     
-    cal.hide();
+    // cal.hide();
 }
 
 function showIntelliDateCalendar(input_id_anchor, input_id,
