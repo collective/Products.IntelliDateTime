@@ -14,15 +14,9 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Field import ObjectField
 from Products.Archetypes.Field import DateTimeField
 
-from bda.intellidatetime import IIntelliDateTime
-from bda.intellidatetime import DateTimeConversionError
-
 from widget import IntelliDateTimeWidget
 
 class IntelliDateTimeField(DateTimeField):
-    """Derived from the common DateTimeField, this class hook in the datetime
-    conversion function from bda.intellidatetime.converter.
-    """
     
     _properties = DateTimeField._properties.copy()
     _properties.update({
@@ -35,12 +29,10 @@ class IntelliDateTimeField(DateTimeField):
     security.declarePrivate('validate_required')
     def validate_required(self, instance, value, errors):
         try:
-            DateTime(value)
+            DateTime(value.isoformat())
         except DateTime.DateTimeError:
             result = False
         else:
-            # None is a valid DateTime input, but does not validate for
-            # required.
             result = value is not None
         return ObjectField.validate_required(self, instance, result, errors)
 
@@ -50,7 +42,7 @@ class IntelliDateTimeField(DateTimeField):
             value = None
         elif not isinstance(value, DateTime):
             try:
-                value = DateTime(value)
+                value = DateTime(value.isoformat())
             except DateTime.DateTimeError:
                 value = None
 

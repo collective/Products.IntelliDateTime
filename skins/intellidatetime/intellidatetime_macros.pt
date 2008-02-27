@@ -1,0 +1,34 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+  <body>
+    <div metal:define-macro="intelliDatePickerBox"
+         tal:define="tabindex tabindex/next|tabindex|nothing;
+                     inputIndex uniqueItemIndex/next;
+                     input_id string:${formname}_${inputname}_${inputIndex};">
+      
+      <input type="text"
+             size="10"
+             tal:attributes="id string:${input_id}_date;
+                             name string:${inputname}_date;
+                             value dateinputvalue;
+                             tabindex tabindex;" />
+             
+      <a tal:define="jscall string:showIntelliDateCalendar('${input_id}_date',
+                                                           '${input_id}_date',
+                                                           ${starting_year},
+                                                           ${ending_year});"
+         tal:attributes="onclick string:return ${jscall};">
+        <img tal:replace="structure here/popup_calendar.gif" />
+      </a>
+            
+      <input type="text"
+             size="5"
+             tal:attributes="id string:${input_id}_time;
+                             name string:${inputname}_time;
+                             value timeinputvalue;
+                             tabindex tabindex;" />
+      
+    </div>
+  </body>
+</html>
