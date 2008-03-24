@@ -4,8 +4,7 @@
   <body>
     <div metal:define-macro="intelliDatePickerBox"
          tal:define="tabindex tabindex/next|tabindex|nothing;
-                     inputIndex uniqueItemIndex/next;
-                     input_id string:${formname}_${inputname}_${inputIndex};">
+                     input_id string:${formname}_${inputname};">
       
       <input type="text"
              size="10"
