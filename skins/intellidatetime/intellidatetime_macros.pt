@@ -9,6 +9,7 @@
       
       <input type="text"
              size="10"
+             class="dateinput"
              tal:attributes="id string:${input_id}_date;
                              name string:${inputname}_date;
                              value dateinputvalue;
@@ -24,6 +25,7 @@
             
       <input type="text"
              size="5"
+             class="timeinput"
              tal:attributes="id string:${input_id}_time;
                              name string:${inputname}_time;
                              value timeinputvalue;
