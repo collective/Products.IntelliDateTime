@@ -2,7 +2,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       i18n:domain="plone">
   <body>
-    <div metal:define-macro="intelliDatePickerBox"
+    <div metal:define-macro="intelliDatePickerBox" class="intellidatetime"
          tal:define="tabindex tabindex/next|tabindex|nothing;
                      input_id string:${formname}_${inputname};">
       

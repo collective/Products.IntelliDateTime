@@ -30,7 +30,7 @@ class IntelliDateTimeField(DateTimeField):
     def validate_required(self, instance, value, errors):
         try:
             DateTime(value.isoformat())
-        except DateTime.DateTimeError:
+        except Exception:
             result = False
         else:
             result = value is not None
