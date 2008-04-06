@@ -41,7 +41,6 @@ class IntelliDateTimeWidget(CalendarWidget):
                                                    time=time,
                                                    locale='de')
         except DateTimeConversionError, e:
-            print e
             if emptyReturnsMarker and not date:
                 value = empty_marker
             else:
