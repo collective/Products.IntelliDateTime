@@ -7,6 +7,8 @@
 __author__ = """Robert Niederreiter <rnix@squarewave.at>"""
 __docformat__ = 'plaintext'
 
+from DateTime import DateTime
+
 from AccessControl import ClassSecurityInfo
 
 from Products.Archetypes.Widget import CalendarWidget
@@ -33,22 +35,15 @@ class IntelliDateTimeWidget(CalendarWidget):
                      emptyReturnsMarker=False):
         
         fieldname = field.getName()
-        date = form.get('%s_date' % fieldname)
-        time = form.get('%s_time' % fieldname)
+        value = self._readDateTimeFromForm(form, fieldname)
         
-        try:
-            value = IIntelliDateTime(self).convert(date,
-                                                   time=time,
-                                                   locale='de')
-        except DateTimeConversionError, e:
-            if emptyReturnsMarker and not date:
-                value = empty_marker
-            else:
-                value = None
+        if value is None and emptyReturnsMarker:
+            value = empty_marker
         
         return value, {}
     
-    def dateInputValue(self, value):
+    def dateInputValue(self, value, fieldname=None):
+        value = self._readValue(value, fieldname)
         if not value:
             return ''
         
@@ -70,7 +65,8 @@ class IntelliDateTimeWidget(CalendarWidget):
                     continue
         return date.strip('.')
     
-    def timeInputValue(self, value):
+    def timeInputValue(self, value, fieldname=None):
+        value = self._readValue(value, fieldname)
         if not value:
             return ''
         
@@ -85,3 +81,24 @@ class IntelliDateTimeWidget(CalendarWidget):
             minute = '0%s' % minute
         
         return '%s:%s' % (hour, minute)
+    
+    def _readValue(self, value, fieldname):
+        if not value:
+            if fieldname is not None:
+                value = self._readDateTimeFromForm(self.REQUEST.form, fieldname)
+        return value
+    
+    def _readDateTimeFromForm(self, form, fieldname):
+        date = form.get('%s_date' % fieldname)
+        time = form.get('%s_time' % fieldname)
+        try:
+            value = IIntelliDateTime(self).convert(date,
+                                                   time=time,
+                                                   locale='de')
+            try:
+                value = DateTime(value.isoformat())
+            except DateTime.DateTimeError:
+                value = None
+        except DateTimeConversionError, e:
+            value = None
+        return value
