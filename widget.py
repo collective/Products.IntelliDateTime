@@ -8,11 +8,11 @@ __author__ = """Robert Niederreiter <rnix@squarewave.at>"""
 __docformat__ = 'plaintext'
 
 from DateTime import DateTime
-
 from AccessControl import ClassSecurityInfo
 
 from Products.Archetypes.Widget import CalendarWidget
 
+from bda.calendar.base.interfaces import ITimezoneFactory
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
 
@@ -35,15 +35,15 @@ class IntelliDateTimeWidget(CalendarWidget):
                      emptyReturnsMarker=False):
         
         fieldname = field.getName()
-        value = self._readDateTimeFromForm(form, fieldname)
+        value = self._readDateTimeFromForm(instance, form, fieldname)
         
         if value is None and emptyReturnsMarker:
             value = empty_marker
         
         return value, {}
     
-    def dateInputValue(self, value, fieldname=None):
-        value = self._readValue(value, fieldname)
+    def dateInputValue(self, instance, value, fieldname=None):
+        value = self._readValue(instance, value, fieldname)
         if not value:
             return ''
         
@@ -65,36 +65,31 @@ class IntelliDateTimeWidget(CalendarWidget):
                     continue
         return date.strip('.')
     
-    def timeInputValue(self, value, fieldname=None):
-        value = self._readValue(value, fieldname)
+    def timeInputValue(self, instance, value, fieldname=None):
+        value = self._readValue(instance, value, fieldname)
         if not value:
             return ''
         
-        hour = str(value.hour())
-        minute = str(value.minute())
-        if hour == '0' and minute == '0':
+        if not value.hour and not value.minute:
             return ''
         
-        if len(hour) == 1:
-            hour = '0%s' % hour
-        if len(minute) == 1:
-            minute = '0%s' % minute
-        
-        return '%s:%s' % (hour, minute)
+        formatted = '%02d:%02d' % (value.hour(), value.minute())
+        return formatted
     
-    def _readValue(self, value, fieldname):
+    def _readValue(self, instance, value, fieldname):
         if not value:
             if fieldname is not None:
-                value = self._readDateTimeFromForm(self.REQUEST.form, fieldname)
+                value = self._readDateTimeFromForm(instance, self.REQUEST.form, 
+                                                   fieldname)
         return value
     
-    def _readDateTimeFromForm(self, form, fieldname):
+    def _readDateTimeFromForm(self, instance, form, fieldname):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
+        tzinfo = ITimezoneFactory(instance)
         try:
-            value = IIntelliDateTime(self).convert(date,
-                                                   time=time,
-                                                   locale='de')
+            value = IIntelliDateTime(self).convert(date, time=time, locale='de',
+                                                   tzinfo=tzinfo)
             try:
                 value = DateTime(value.isoformat())
             except DateTime.DateTimeError:
