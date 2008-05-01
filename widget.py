@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 #
-# Copyright 2008, BDA - Blue Dynamics Alliance, Austria - www.bluedynamics.com
+# Copyright 2008, BlueDynamics Alliance, Austria - http://bluedynamics.com
 #
-# GNU General Public Licence Version 2 or later - see LICENCE.GPL
+# GNU General Public Licence Version 2 or later
 
-__author__ = """Robert Niederreiter <rnix@squarewave.at>"""
+__author__ = """Robert Niederreiter <rnix@squarewave.at>
+                Jens Klein <jens@bluedynamics.com>"""
 __docformat__ = 'plaintext'
 
 from DateTime import DateTime
@@ -36,7 +36,6 @@ class IntelliDateTimeWidget(CalendarWidget):
         
         fieldname = field.getName()
         value = self._readDateTimeFromForm(instance, form, fieldname)
-        
         if value is None and emptyReturnsMarker:
             value = empty_marker
         
@@ -77,23 +76,27 @@ class IntelliDateTimeWidget(CalendarWidget):
         return formatted
     
     def _readValue(self, instance, value, fieldname):
-        if not value:
-            if fieldname is not None:
-                value = self._readDateTimeFromForm(instance, self.REQUEST.form, 
-                                                   fieldname)
+        submitted = self.REQUEST.form.get('submitted')
+        if fieldname is None:
+            return value
+        formvalue = self._readDateTimeFromForm(instance, self.REQUEST.form, 
+                                               fieldname)
+        if formvalue or (not formvalue and value and submitted):
+            return formvalue
         return value
     
     def _readDateTimeFromForm(self, instance, form, fieldname):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
+        print time
         tzinfo = ITimezoneFactory(instance)
         try:
             value = IIntelliDateTime(self).convert(date, time=time, locale='de',
                                                    tzinfo=tzinfo)
-            try:
-                value = DateTime(value.isoformat())
-            except DateTime.DateTimeError:
-                value = None
         except DateTimeConversionError, e:
-            value = None
+            return None
+        try:
+            value = DateTime(value.isoformat())
+        except DateTime.DateTimeError:
+            return None
         return value
