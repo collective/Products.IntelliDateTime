@@ -88,7 +88,6 @@ class IntelliDateTimeWidget(CalendarWidget):
     def _readDateTimeFromForm(self, instance, form, fieldname):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
-        print time
         tzinfo = ITimezoneFactory(instance)
         try:
             value = IIntelliDateTime(self).convert(date, time=time, locale='de',
