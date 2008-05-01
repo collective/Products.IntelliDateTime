@@ -7,7 +7,7 @@ and time input.
 Target:
 =======
 
-  * Plone 2.5+
+  * Plone 2.5+, 3.x
 
 Requires:
 =========
@@ -26,3 +26,7 @@ Credits:
 
   Written by Robert Niederreiter <rnix@squarewave.at>
     Squarewave Computing, BlueDynamics Alliance Austria
+  
+  Bugfixes by Jens Klein <jens@bluedynamics.com>
+    BlueDynamics Alliance, Klein & Partner KEG, Austria
+  
