@@ -32,11 +32,18 @@ class IntelliDateTimeWidget(CalendarWidget):
     
     security.declarePublic('process_form')
     def process_form(self, instance, field, form, empty_marker=None,
-                     emptyReturnsMarker=False):
+                     emptyReturnsMarker=False, validating=True):
         
-        fieldname = field.getName()
+        fieldname = field.getName()        
+        
+        # check if field is there!
+        testvalue = form.get('%s_date' % fieldname, empty_marker)
+        if testvalue is empty_marker:
+            return empty_marker
+        
+        # if its there we can read
         value = self._readDateTimeFromForm(instance, form, fieldname)
-        if value is None and emptyReturnsMarker:
+        if value is None and empty_marker:
             value = empty_marker
         
         return value, {}
