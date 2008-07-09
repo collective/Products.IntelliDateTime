@@ -46,7 +46,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         value = self._readDateTimeFromForm(instance, form, fieldname)
         if value is None and empty_marker:
             value = empty_marker
-        
+        print 'field: ', value
         return value, {}
     
     def dateInputValue(self, instance, value, fieldname=None):
@@ -102,6 +102,8 @@ class IntelliDateTimeWidget(CalendarWidget):
                                                    tzinfo=tzinfo)
         except DateTimeConversionError, e:
             return None
+        # correct DST, dont add one hour!
+        value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
         try:
             value = DateTime(value.isoformat())
         except DateTime.DateTimeError:
