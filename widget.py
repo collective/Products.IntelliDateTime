@@ -27,6 +27,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         'ending_year': 2100,
         'format': 'dd/mm/y', # TODO: strformat compatibility for the js
     })
+    del _properties['helper_js']
 
     security = ClassSecurityInfo()
     
