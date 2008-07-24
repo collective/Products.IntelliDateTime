@@ -26,6 +26,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         'starting_year': 1900,
         'ending_year': 2100,
         'format': 'dd/mm/y', # TODO: strformat compatibility for the js
+        'defaulttime': '', # prefill time, but no date if value is None
     })
     del _properties['helper_js']
 
@@ -74,10 +75,10 @@ class IntelliDateTimeWidget(CalendarWidget):
     def timeInputValue(self, instance, value, fieldname=None):
         value = self._readValue(instance, value, fieldname)
         if not value:
-            return ''
+            return self.defaulttime
         
         if not value.hour and not value.minute:
-            return ''
+            return self.defaulttime
         
         formatted = '%02d:%02d' % (value.hour(), value.minute())
         return formatted
