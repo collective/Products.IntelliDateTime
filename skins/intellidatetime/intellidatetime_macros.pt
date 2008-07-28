@@ -25,6 +25,7 @@
       <input type="text"
              size="5"
              class="timeinput"
+             tal:condition="widget/show_hm|nothing"
              tal:attributes="id string:${input_id}_time;
                              name string:${inputname}_time;
                              value timeinputvalue;
