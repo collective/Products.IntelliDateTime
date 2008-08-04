@@ -4,6 +4,9 @@ Changes for IntelliDateTime
 unreleased
 ----------
 
+- widget now can return zope DateTime or python datetime
+  [Jensens]
+
 - widget now displays time input only if ``show_hm`` is set to ``True``
   (as does CalendarWidget)
   [2008/07/28 fRiSi]

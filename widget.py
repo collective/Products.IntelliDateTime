@@ -7,11 +7,12 @@ __author__ = """Robert Niederreiter <rnix@squarewave.at>
                 Jens Klein <jens@bluedynamics.com>"""
 __docformat__ = 'plaintext'
 
+from zope.interface import Interface
+from zope.interface import implementer
+from zope.component import queryAdapter
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
-
 from Products.Archetypes.Widget import CalendarWidget
-
 from bda.calendar.base.interfaces import ITimezoneFactory
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
@@ -25,6 +26,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         'macro' : 'intellidatetime',
         'starting_year': 1900,
         'ending_year': 2100,
+        'datetimeimplemenation': 'zope', # zope, python or provide own adapter
         'format': 'dd/mm/y', # TODO: strformat compatibility for the js
         'defaulttime': '', # prefill time, but no date if value is None
     })
@@ -104,8 +106,21 @@ class IntelliDateTimeWidget(CalendarWidget):
             return None
         # correct DST, dont add one hour!
         value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
-        try:
-            value = DateTime(value.isoformat())
-        except DateTime.DateTimeError:
-            return None
+        value = queryAdapter(value, IDateTimeImplementation,
+                             name=self.datetimeimplemenation)        
         return value
+    
+class IDateTimeImplementation(Interface):
+    """converts python datetime to some other implementation."""
+
+@implementer(IDateTimeImplementation)
+def ZopeDateTime(value):
+    try:
+        return DateTime(value.isoformat())
+    except DateTime.DateTimeError:
+        return None
+
+@implementer(IDateTimeImplementation)
+def PythonDateTime(value):
+    return value
+    

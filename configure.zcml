@@ -2,4 +2,12 @@
 
   <include package="bda.intellidatetime" />
   
+  <adapter factory=".widget.ZopeDateTime" 
+		   for="*"
+		   name="zope" />
+  <adapter factory=".widget.PythonDateTime" 
+		   for="*"
+		   name="python" />
+		   
+  
 </configure>
