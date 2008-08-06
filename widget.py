@@ -25,7 +25,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         'macro' : 'intellidatetime',
         'starting_year': 1900,
         'ending_year': 2100,
-        'datetimeimplemenation': 'zope', # zope, python or provide own adapter
+        'datetimeimplementation': 'zope', # zope, python or provide own adapter
         'format': 'dd/mm/y', # TODO: strformat compatibility for the js
         'defaulttime': '', # prefill time, but no date if value is None
     })
@@ -122,6 +122,7 @@ class IntelliDateTimeWidget(CalendarWidget):
             return None
         # correct DST, dont add one hour!
         value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
+        print fieldname, self.datetimeimplementation
         value = queryAdapter(value, IDateTimeImplementation,
                              name=self.datetimeimplemenation)   
         return value
