@@ -20,7 +20,6 @@ from bda.intellidatetime import DateTimeConversionError
 class IntelliDateTimeWidget(CalendarWidget):
     """Widget for IntelliDateTime input.
     """
-    
     _properties = CalendarWidget._properties.copy()
     _properties.update({
         'macro' : 'intellidatetime',
@@ -58,20 +57,31 @@ class IntelliDateTimeWidget(CalendarWidget):
         
         date = ''
         lastchar = None
+        if isinstance(value, DateTime):
+            # zope DateTime
+            day = value.day()
+            month = value.month()
+            year = value.year()
+        else:
+            # python datetime
+            day = value.day
+            month = value.month
+            year = value.year
         for char in self.format:
-            if char != lastchar:
-                if char == 'd':
-                    lastchar = char
-                    date += str(value.day()) + '.'
-                    continue
-                if char == 'm':
-                    lastchar = char
-                    date += str(value.month()) + '.'
-                    continue
-                if char == 'y':
-                    lastchar = char
-                    date += str(value.year()) + '.'
-                    continue
+            if char == lastchar:
+                continue
+            if char == 'd':
+                lastchar = char
+                date += str(day) + '.'
+                continue
+            if char == 'm':
+                lastchar = char
+                date += str(month) + '.'
+                continue
+            if char == 'y':
+                lastchar = char
+                date += str(year) + '.'
+                continue
         return date.strip('.')
     
     def timeInputValue(self, instance, value, fieldname=None):
@@ -82,7 +92,13 @@ class IntelliDateTimeWidget(CalendarWidget):
         if not value.hour and not value.minute:
             return self.defaulttime
         
-        formatted = '%02d:%02d' % (value.hour(), value.minute())
+        if isinstance(value, DateTime):
+            hour = value.hour()
+            min =value.minute()
+        else:
+            hour = value.hour
+            min =value.minute                    
+        formatted = '%02d:%02d' % (hour, min)
         return formatted
     
     def _readValue(self, instance, value, fieldname):
@@ -107,7 +123,8 @@ class IntelliDateTimeWidget(CalendarWidget):
         # correct DST, dont add one hour!
         value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
         value = queryAdapter(value, IDateTimeImplementation,
-                             name=self.datetimeimplemenation)        
+                             name=self.datetimeimplemenation)   
+        print 'widget', value, value.__class__     
         return value
     
 class IDateTimeImplementation(Interface):

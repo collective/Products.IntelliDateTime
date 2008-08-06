@@ -24,3 +24,20 @@ class IntelliDateTimeField(DateTimeField):
     })
 
     security  = ClassSecurityInfo()
+    
+    security.declarePrivate('set')
+    def set(self, instance, value, **kwargs):
+        """
+        Check if value is an actual date/time value. If not, attempt
+        to convert it to one; otherwise, set to None. Assign all
+        properties passed as kwargs to object.
+        """
+        if not value:
+            value = None
+#        elif not isinstance(value, DateTime) :
+#            try:
+#                value = DateTime(value)
+#            except DateTime.DateTimeError:
+#                value = None
+
+        ObjectField.set(self, instance, value, **kwargs)    
