@@ -122,9 +122,8 @@ class IntelliDateTimeWidget(CalendarWidget):
             return None
         # correct DST, dont add one hour!
         value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
-        print fieldname, self.datetimeimplementation
         value = queryAdapter(value, IDateTimeImplementation,
-                             name=self.datetimeimplemenation)   
+                             name=self.datetimeimplementation)   
         return value
     
 class IDateTimeImplementation(Interface):
