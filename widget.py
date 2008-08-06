@@ -124,7 +124,6 @@ class IntelliDateTimeWidget(CalendarWidget):
         value = value.replace(tzinfo=tzinfo.normalize(value).tzinfo)
         value = queryAdapter(value, IDateTimeImplementation,
                              name=self.datetimeimplemenation)   
-        print 'widget', value, value.__class__     
         return value
     
 class IDateTimeImplementation(Interface):
