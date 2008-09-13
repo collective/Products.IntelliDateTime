@@ -9,5 +9,6 @@
 		   for="*"
 		   name="python" />
 		   
-  
+  <adapter factory=".widget.getPortalDefaultDateTimeLocale" />
+
 </configure>

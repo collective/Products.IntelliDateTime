@@ -7,15 +7,22 @@ __author__ = """Robert Niederreiter <rnix@squarewave.at>
                 Jens Klein <jens@bluedynamics.com>"""
 __docformat__ = 'plaintext'
 
+from zope.component import adapts, adapter
 from zope.interface import Interface
 from zope.interface import implementer
 from zope.component import queryAdapter
+from zope.component import getUtility
+
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import CalendarWidget
 from bda.calendar.base.interfaces import ITimezoneFactory
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
+
+
+from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from Products.IntelliDateTime.interfaces import ILocaleFactory
 
 class IntelliDateTimeWidget(CalendarWidget):
     """Widget for IntelliDateTime input.
@@ -114,9 +121,25 @@ class IntelliDateTimeWidget(CalendarWidget):
     def _readDateTimeFromForm(self, instance, form, fieldname):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
-        tzinfo = ITimezoneFactory(instance)
+        
+        site = getUtility(IPloneSiteRoot)
+        
+        # these default adapters read properties of your plone site.
+        # tzinfo is one of pytz.all_timezones
+        # locale is one of those in bda.intellidatetime.converter
+        
+        # register a adapter that meets your need for your site if you need other behaviour
+        # the default is using the server's timezone (which will prevent you from clashes with
+        # non-timezone aware dates (archetypes default datetimefields)
+        tzinfo = ITimezoneFactory(site)
+        
+        # locales define the format for dates (%Y-%m-%d in 'en'... see bda.indellidatetime.converter)
+        # the default implementation fetches the portal's default_language
+        # possible specialisations could return a locale for the logged in user
+        locale = ILocaleFactory(site)
+        
         try:
-            value = IIntelliDateTime(self).convert(date, time=time, locale='de',
+            value = IIntelliDateTime(self).convert(date, time=time, locale=locale,
                                                    tzinfo=tzinfo)
         except DateTimeConversionError, e:
             return None
@@ -139,4 +162,13 @@ def ZopeDateTime(value):
 @implementer(IDateTimeImplementation)
 def PythonDateTime(value):
     return value
-    
+
+
+@implementer(ILocaleFactory)
+@adapter(IPloneSiteRoot)
+def getPortalDefaultDateTimeLocale(site):
+    """returns the default_language of the portal
+    this will trigger the way dates are parsed by bda.intellidatetime
+    """
+    return site.portal_properties.site_properties.default_language
+
