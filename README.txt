@@ -29,4 +29,7 @@ Credits:
   
   Bugfixes by Jens Klein <jens@bluedynamics.com>
     BlueDynamics Alliance, Klein & Partner KEG, Austria
+    
+  Contributions & Bugfixes by Harald Friessnegger
+    Webmeisterei, Austria
   
