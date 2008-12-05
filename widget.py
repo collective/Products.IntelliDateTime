@@ -12,10 +12,12 @@ from zope.interface import Interface
 from zope.interface import implementer
 from zope.component import queryAdapter
 from zope.component import getUtility
+from zope.component import queryUtility
 
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import CalendarWidget
+from Products.CMFCore.utils import getToolByName
 from bda.calendar.base.interfaces import ITimezoneFactory
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
@@ -122,7 +124,10 @@ class IntelliDateTimeWidget(CalendarWidget):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
         
-        site = getUtility(IPloneSiteRoot)
+        site = queryUtility(IPloneSiteRoot)
+        if site is None:
+            site = getToolByName(instance, 'portal_url').getPortalObject()
+        
         
         # these default adapters read properties of your plone site.
         # tzinfo is one of pytz.all_timezones

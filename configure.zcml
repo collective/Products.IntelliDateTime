@@ -1,6 +1,7 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <include package="bda.intellidatetime" />
+  <include package="bda.calendar.base" />
   
   <adapter factory=".widget.ZopeDateTime" 
 		   for="*"
