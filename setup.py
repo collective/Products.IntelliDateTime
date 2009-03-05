@@ -16,8 +16,8 @@ changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()
 
 setup(name='Products.IntelliDateTime',
       version=version,
-      description=shortdesc + changes,
-      long_description=longdesc,
+      description=shortdesc,
+      long_description=longdesc + changes,
       classifiers=[
             'Development Status :: 4 - Beta',
             'Environment :: Web Environment',
