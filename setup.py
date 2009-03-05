@@ -40,6 +40,7 @@ setup(name='Products.Smokesignals',
       install_requires=[
           'setuptools', 
           'bda.intellidatetime',
+          'bda.calendar.base',
           # -*- Extra requirements: -*
       ],
       extras_require={
