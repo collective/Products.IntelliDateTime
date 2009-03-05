@@ -15,7 +15,12 @@ def install(self):
     out = StringIO()
     install_subskin(self, out, GLOBALS)
     
-    js = ({'id': 'intellidatetime.js'},)
+    js = (
+        {'id': 'intellidatetime.js'},
+        {'id': 'jscalendar/calendar.js'},
+        {'id': 'jscalendar/calendar-en.js'},
+        {'id': 'jscalendar/calendar-de.js'},
+    )
     registerJavascripts(self, out, js)
     
     out.write("Successfully installed %s." % PROJECTNAME)
