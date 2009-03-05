@@ -20,6 +20,8 @@ TODO:
 =====
 
   * branch me for 2.5 and focus 3.0 in trunk
+  * make installation via generic setup
+  * get rid of jscalendar stuff and alter by jquery calendar widget.
 
 Credits:
 ========
