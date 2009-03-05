@@ -14,7 +14,7 @@ shortdesc ="Archetypes Datetime Widget using bda.intellidatetime conversion"
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()
 
-setup(name='Products.Smokesignals',
+setup(name='Products.IntelliDateTime',
       version=version,
       description=shortdesc + changes,
       long_description=longdesc,
