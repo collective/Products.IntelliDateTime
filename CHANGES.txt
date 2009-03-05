@@ -1,8 +1,14 @@
 Changes for IntelliDateTime
 ===========================
 
-unreleased
-----------
+1.1
+---
+
+- eggified
+  [2009/03/05 rnix]
+
+1.0
+---
 
 - widget now can return zope DateTime or python datetime
   [Jensens]

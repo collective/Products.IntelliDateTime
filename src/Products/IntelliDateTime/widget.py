@@ -1,5 +1,5 @@
 #
-# Copyright 2008, BlueDynamics Alliance, Austria - http://bluedynamics.com
+# Copyright 2008-2009, Blue Dynamics Alliance, Austria - http://bluedynamics.com
 #
 # GNU General Public Licence Version 2 or later
 

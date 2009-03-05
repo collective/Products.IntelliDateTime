@@ -1,7 +1,7 @@
-IntelliDateTime
-===============
+Products.IntelliDateTime
+========================
 
-Field and Widget using bda.intellidatetime converter functions for date
+Field and Widget using ``bda.intellidatetime`` converter functions for date
 and time input.
 
 Target:
@@ -32,4 +32,3 @@ Credits:
     
   Contributions & Bugfixes by Harald Friessnegger
     Webmeisterei, Austria
-  
