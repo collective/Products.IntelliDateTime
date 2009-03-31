@@ -38,6 +38,7 @@ class IntelliDateTimeField(DateTimeField):
         
     security.declarePrivate('validate_required')
     def validate_required(self, instance, value, errors):
-        return value is not None
+        result = value is not None
+        return ObjectField.validate_required(self, instance, result, errors)
 
             
