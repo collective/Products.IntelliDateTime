@@ -34,10 +34,10 @@ class IntelliDateTimeField(DateTimeField):
         """
         if not value:
             value = None
-#        elif not isinstance(value, DateTime) :
-#            try:
-#                value = DateTime(value)
-#            except DateTime.DateTimeError:
-#                value = None
+        ObjectField.set(self, instance, value, **kwargs)
+        
+    security.declarePrivate('validate_required')
+    def validate_required(self, instance, value, errors):
+        return value is not None
 
-        ObjectField.set(self, instance, value, **kwargs)    
+            
