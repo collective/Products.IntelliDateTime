@@ -95,10 +95,7 @@ class IntelliDateTimeWidget(CalendarWidget):
     
     def timeInputValue(self, instance, value, fieldname=None):
         value = self._readValue(instance, value, fieldname)
-        if not value:
-            return self.defaulttime
-        
-        if not value.hour and not value.minute:
+        if value is None:
             return self.defaulttime
         
         if isinstance(value, DateTime):
