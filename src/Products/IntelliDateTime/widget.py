@@ -1,6 +1,4 @@
-#
-# Copyright 2008-2009, Blue Dynamics Alliance, Austria - http://bluedynamics.com
-#
+# Copyright 2008-2009, BlueDynamics Alliance, Austria - http://bluedynamics.com
 # GNU General Public Licence Version 2 or later
 
 __author__ = """Robert Niederreiter <rnix@squarewave.at>
@@ -100,10 +98,10 @@ class IntelliDateTimeWidget(CalendarWidget):
         
         if isinstance(value, DateTime):
             hour = value.hour()
-            min =value.minute()
+            min = value.minute()
         else:
             hour = value.hour
-            min =value.minute                    
+            min = value.minute                    
         formatted = '%02d:%02d' % (hour, min)
         return formatted
     
@@ -130,19 +128,21 @@ class IntelliDateTimeWidget(CalendarWidget):
         # tzinfo is one of pytz.all_timezones
         # locale is one of those in bda.intellidatetime.converter
         
-        # register a adapter that meets your need for your site if you need other behaviour
-        # the default is using the server's timezone (which will prevent you from clashes with
-        # non-timezone aware dates (archetypes default datetimefields)
+        # register a adapter that meets your need for your site if you need 
+        # other behaviour. the default is using the server's timezone (which 
+        # will prevent you from clashes with non-timezone aware dates 
+        # (archetypes default datetimefields)
         tzinfo = ITimezoneFactory(site)
         
-        # locales define the format for dates (%Y-%m-%d in 'en'... see bda.indellidatetime.converter)
+        # locales define the format for dates (%Y-%m-%d in 'en'... see 
+        # bda.indellidatetime.converter)
         # the default implementation fetches the portal's default_language
         # possible specialisations could return a locale for the logged in user
         locale = ILocaleFactory(site)
         
         try:
-            value = IIntelliDateTime(self).convert(date, time=time, locale=locale,
-                                                   tzinfo=tzinfo)
+            value = IIntelliDateTime(self).convert(date, time=time, 
+                                                   locale=locale, tzinfo=tzinfo)
         except DateTimeConversionError, e:
             return None
         # correct DST, dont add one hour!
