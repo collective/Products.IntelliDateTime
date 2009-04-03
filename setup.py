@@ -9,7 +9,7 @@ __docformat__ = 'plaintext'
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.1'
+version = '1.2'
 shortdesc ="Archetypes Datetime Widget using bda.intellidatetime conversion"
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()

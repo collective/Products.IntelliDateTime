@@ -1,6 +1,15 @@
 Changes for IntelliDateTime
 ===========================
 
+1.2
+---
+
+- overwrite validate_required in field.py
+  [2009/03/01 jensens]
+  
+- remove wrong condition in widget.py
+  [2009/03/01 jensens]
+
 1.1
 ---
 
