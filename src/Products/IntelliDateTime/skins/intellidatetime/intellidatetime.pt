@@ -19,7 +19,7 @@
     <metal:view_macro define-macro="view"
        tal:define="d accessor;
                    d python:test(d and d=='None','',d);
-                   result python:d and here.toLocalizedTime(d, long_format=1) or '';"
+                   result python:d and here.toLocalizedTime(d, long_format=1) or str(d);"
        tal:replace="structure python:result" />
 
     <metal:define define-macro="edit"
