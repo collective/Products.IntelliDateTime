@@ -120,8 +120,7 @@ class IntelliDateTimeWidget(CalendarWidget):
         site = self._site(instance)
         locale = ILocaleFactory(site)
         locale = locales.getLocale(locale, locale)
-        short = self.show_hm
-        if short:
+        if not self.show_hm:
             return ltimefmt(dt, locale, category="date", length="short")
         return ltimefmt(dt, locale, category="dateTime", length="short")
     

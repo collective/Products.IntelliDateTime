@@ -2,6 +2,12 @@
 Changes for IntelliDateTime
 ===========================
 
+1.3.1
+-----
+
+- correct show_hm condition for datetime.datetime rendering
+  [2009/04/15 rnix]
+
 1.3
 ---
 
