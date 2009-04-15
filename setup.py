@@ -9,7 +9,7 @@ __docformat__ = 'plaintext'
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.2'
+version = '1.3'
 shortdesc ="Archetypes Datetime Widget using bda.intellidatetime conversion"
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()
@@ -19,7 +19,7 @@ setup(name='Products.IntelliDateTime',
       description=shortdesc,
       long_description=longdesc + changes,
       classifiers=[
-            'Development Status :: 4 - Beta',
+            'Development Status :: 5 - Production/Stable',
             'Environment :: Web Environment',
             'Framework :: Zope2',
             'License :: OSI Approved :: GNU General Public License (GPL)',
@@ -41,6 +41,7 @@ setup(name='Products.IntelliDateTime',
           'setuptools', 
           'bda.intellidatetime',
           'bda.calendar.base',
+          'van.timeformat',
           # -*- Extra requirements: -*
       ],
       extras_require={

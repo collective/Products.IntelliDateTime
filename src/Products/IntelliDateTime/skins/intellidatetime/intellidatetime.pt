@@ -7,20 +7,19 @@
   <head><title></title></head>
 
   <body>
-
-    <metal:view_macro define-macro="view_later"
-       tal:define="d accessor;
-                   d python:test(d and d=='None','',d);
-                   format widget/format;
-                   formatted python:format and d and d.strftime(format);
-                   result python:(format and formatted) or (d and here.toLocalizedTime(d, long_format=1));"
-       tal:replace="structure python:result" />
     
     <metal:view_macro define-macro="view"
-       tal:define="d accessor;
-                   d python:test(d and d=='None','',d);
-                   result python:d and here.toLocalizedTime(d, long_format=1) or '';"
-       tal:replace="structure python:result" />
+                      tal:define="d accessor;
+                                  d python:test(d and d == 'None', '', d)">
+      <tal:short condition="not:widget/show_hm"
+                 tal:define="dt python: d and here.toLocalizedTime(d, long_format=0) or '';
+                             dt python: dt and dt or widget.formatDateTime(context, d)"
+                 tal:replace="structure dt" />
+      <tal:long condition="widget/show_hm"
+                tal:define="dt python: d and here.toLocalizedTime(d, long_format=1) or '';
+                            dt python: dt and dt or widget.formatDateTime(context, d)"
+                tal:replace="structure dt" />
+    </metal:view_macro>
 
     <metal:define define-macro="edit"
        tal:define="format widget/format">

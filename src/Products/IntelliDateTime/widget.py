@@ -11,6 +11,8 @@ from zope.interface import implementer
 from zope.component import queryAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.i18n.locales import locales
+from van.timeformat import ltimefmt
 
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -19,7 +21,6 @@ from Products.CMFCore.utils import getToolByName
 from bda.calendar.base.interfaces import ITimezoneFactory
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
-
 
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from Products.IntelliDateTime.interfaces import ILocaleFactory
@@ -115,14 +116,19 @@ class IntelliDateTimeWidget(CalendarWidget):
             return formvalue
         return value
     
+    def formatDateTime(self, instance, dt):
+        site = self._site(instance)
+        locale = ILocaleFactory(site)
+        locale = locales.getLocale(locale, locale)
+        short = self.show_hm
+        if short:
+            return ltimefmt(dt, locale, category="date", length="short")
+        return ltimefmt(dt, locale, category="dateTime", length="short")
+    
     def _readDateTimeFromForm(self, instance, form, fieldname):
         date = form.get('%s_date' % fieldname)
         time = form.get('%s_time' % fieldname)
-        
-        site = queryUtility(IPloneSiteRoot)
-        if site is None:
-            site = getToolByName(instance, 'portal_url').getPortalObject()
-        
+        site = self._site(instance)
         
         # these default adapters read properties of your plone site.
         # tzinfo is one of pytz.all_timezones
@@ -151,6 +157,12 @@ class IntelliDateTimeWidget(CalendarWidget):
                              name=self.datetimeimplementation)   
         return value
     
+    def _site(self, instance):
+        site = queryUtility(IPloneSiteRoot)
+        if site is None:
+            site = getToolByName(instance, 'portal_url').getPortalObject()
+        return site
+    
 class IDateTimeImplementation(Interface):
     """converts python datetime to some other implementation."""
 
@@ -165,12 +177,11 @@ def ZopeDateTime(value):
 def PythonDateTime(value):
     return value
 
-
 @implementer(ILocaleFactory)
 @adapter(IPloneSiteRoot)
 def getPortalDefaultDateTimeLocale(site):
     """returns the default_language of the portal
-    this will trigger the way dates are parsed by bda.intellidatetime
+    this will trigger the way dates are parsed by bda.intellidatetime and
+    define how dates are formatted for printing
     """
     return site.portal_properties.site_properties.default_language
-
