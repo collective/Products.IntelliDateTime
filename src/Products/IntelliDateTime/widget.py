@@ -20,7 +20,7 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import CalendarWidget
 from Products.CMFCore.utils import getToolByName
 from bda.calendar.base.interfaces import ITimezoneFactory
-from bda.calendar.base.converter import timezoneAdjuster
+from bda.calendar.base.timezone import timezoneAdjuster
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
 
