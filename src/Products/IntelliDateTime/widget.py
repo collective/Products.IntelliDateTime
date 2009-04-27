@@ -117,6 +117,8 @@ class IntelliDateTimeWidget(CalendarWidget):
         return value
     
     def formatDateTime(self, instance, dt):
+        if not dt:
+            return u''
         site = self._site(instance)
         locale = ILocaleFactory(site)
         locale = locales.getLocale(locale, locale)
