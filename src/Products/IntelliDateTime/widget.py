@@ -5,6 +5,7 @@ __author__ = """Robert Niederreiter <rnix@squarewave.at>
                 Jens Klein <jens@bluedynamics.com>"""
 __docformat__ = 'plaintext'
 
+import datetime
 from zope.component import adapts, adapter
 from zope.interface import Interface
 from zope.interface import implementer
@@ -19,6 +20,7 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import CalendarWidget
 from Products.CMFCore.utils import getToolByName
 from bda.calendar.base.interfaces import ITimezoneFactory
+from bda.calendar.base.converter import timezoneAdjuster
 from bda.intellidatetime import IIntelliDateTime
 from bda.intellidatetime import DateTimeConversionError
 
@@ -72,6 +74,7 @@ class IntelliDateTimeWidget(CalendarWidget):
             year = value.year()
         else:
             # python datetime
+            value = timezoneAdjuster(instance, value)
             day = value.day
             month = value.month
             year = value.year
@@ -101,6 +104,7 @@ class IntelliDateTimeWidget(CalendarWidget):
             hour = value.hour()
             min = value.minute()
         else:
+            value = timezoneAdjuster(instance, value)
             hour = value.hour
             min = value.minute                    
         formatted = '%02d:%02d' % (hour, min)
@@ -119,6 +123,7 @@ class IntelliDateTimeWidget(CalendarWidget):
     def formatDateTime(self, instance, dt):
         if not dt:
             return u''
+        dt = timezoneAdjuster(instance, dt)
         site = self._site(instance)
         locale = ILocaleFactory(site)
         locale = locales.getLocale(locale, locale)
