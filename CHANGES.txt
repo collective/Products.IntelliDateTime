@@ -2,8 +2,8 @@
 Changes for IntelliDateTime
 ===========================
 
-1.3.2 (dev)
------------
+1.3.2 (2010/01/26)
+------------------
 
 - adjust the output datetime for the widget to the users timezone using
   ITimeZone

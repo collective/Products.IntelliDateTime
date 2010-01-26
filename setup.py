@@ -9,7 +9,7 @@ __docformat__ = 'plaintext'
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.3.1'
+version = '1.3.2'
 shortdesc ="Archetypes Datetime Widget using bda.intellidatetime conversion"
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()
@@ -24,8 +24,8 @@ setup(name='Products.IntelliDateTime',
             'Framework :: Zope2',
             'License :: OSI Approved :: GNU General Public License (GPL)',
             'Operating System :: OS Independent',
-            'Programming Language :: Python', 
-            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',        
+            'Programming Language :: Python',
+            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
       ], # http://www.python.org/pypi?%3Aaction=list_classifiers
       keywords='',
       author='Robert Niederreiter',
@@ -38,7 +38,7 @@ setup(name='Products.IntelliDateTime',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'setuptools', 
+          'setuptools',
           'bda.intellidatetime',
           'bda.calendar.base',
           'van.timeformat',
