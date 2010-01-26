@@ -5,9 +5,19 @@ Changes for IntelliDateTime
 1.3.2 (dev)
 -----------
 
-- adjust the output datetime for the widget to the users timezone using  
-  ITimeZone 
-  [2009-04-27 jensens] 
+- adjust the output datetime for the widget to the users timezone using
+  ITimeZone
+  [2009-04-27 jensens]
+
+- removed the additional calendar javascripts added in
+  http://dev.plone.org/archetypes/changeset/10556 since they broke the
+  popup
+
+  at least in plone4 loading calendar.js in addition to calendar_stripped.js
+  (which is loaded as helper.js by the calendarwidget) results in
+  recursion errors and the date picked in the popup is not written to the input fields.
+
+  [2010-01-26 fRiSi]
 
 1.3.1
 -----
@@ -29,7 +39,7 @@ Changes for IntelliDateTime
 
 - overwrite validate_required in field.py
   [2009-03-01 jensens]
-  
+
 - remove wrong condition in widget.py
   [2009-03-01 jensens]
 

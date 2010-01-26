@@ -10,19 +10,16 @@ from StringIO import StringIO
 from Products.Archetypes.Extensions.utils import install_subskin
 from Products.IntelliDateTime.config import PROJECTNAME, GLOBALS
 from Products.CMFPlone.utils import getToolByName
-        
+
 def install(self):
     out = StringIO()
     install_subskin(self, out, GLOBALS)
-    
+
     js = (
         {'id': 'intellidatetime.js'},
-        {'id': 'jscalendar/calendar.js'},
-        {'id': 'jscalendar/calendar-en.js'},
-        {'id': 'jscalendar/calendar-de.js'},
     )
     registerJavascripts(self, out, js)
-    
+
     out.write("Successfully installed %s." % PROJECTNAME)
     return out.getvalue()
 
