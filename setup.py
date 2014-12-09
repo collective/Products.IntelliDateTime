@@ -11,13 +11,13 @@ import sys, os
 
 version = '1.3.2'
 shortdesc ="Archetypes Datetime Widget using bda.intellidatetime conversion"
-longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
-changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.txt')).read()
+longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+changes = open(os.path.join(os.path.dirname(__file__), 'CHANGES.rst')).read()
 
 setup(name='Products.IntelliDateTime',
       version=version,
       description=shortdesc,
-      long_description=longdesc + changes,
+      long_description="\n".join([longdesc, changes]),
       classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Environment :: Web Environment',
@@ -30,7 +30,7 @@ setup(name='Products.IntelliDateTime',
       keywords='',
       author='Robert Niederreiter',
       author_email='rnix@squarewave.at',
-      url=u'https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/IntelliDateTime',
+      url=u'https://github.com/collective/Products.IntelliDateTime',
       license='General Public Licence',
       packages=find_packages('src'),
       package_dir = {'': 'src'},
