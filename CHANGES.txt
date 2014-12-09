@@ -1,6 +1,12 @@
-
 Changes for IntelliDateTime
 ===========================
+
+dev (unreleased)
+----------------
+
+- Plone4.3 compatibility by adding popup_calendar.gif to skin directory of this
+  product [2014-12-05 fRiSi]
+
 
 1.3.2 (2010/01/26)
 ------------------
